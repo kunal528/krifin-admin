@@ -1,0 +1,75 @@
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  max-width: 300px;
+  height: 100%;
+  background: #151515;
+  transition: all 0.5s ease;
+  z-index: 100;
+  padding: 20px;
+  overflow: auto;
+}
+
+.logo {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.menu {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.menuItem {
+  width: 100%;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.menuItem:hover {
+  background-color: #ffffff1a;
+}
+
+.menuItemTitle {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.menuItemTitle:hover {
+  background-color: #ffffff1a;
+}
+
+.subMenu {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.subMenuItem {
+  width: 100%;
+  cursor: pointer;
+  padding: 0 10px;
+  transition: all 0.5s ease;
+}
+
+.subMenuItem:hover {
+  color: #3d00b7;
+}
