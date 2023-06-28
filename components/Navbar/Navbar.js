@@ -5,7 +5,7 @@ import Link from 'next/link'
 import useWeb3 from '../../lib/useWeb3'
 
 const Navbar = () => {
-    // const { web3 } = useWeb3()
+    const { web3 } = useWeb3()
     return (
         <div className={styles.container}>
             <AiOutlineMenu size={30} />

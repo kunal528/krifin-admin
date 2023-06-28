@@ -14,7 +14,6 @@ const NFTS = () => {
         { name: "ID", uid: "id" },
         { name: "NAME", uid: "name" },
         { name: "DESCRIPTION", uid: "description" },
-        { name: "NO OF COPIES", uid: "totalSupply" },
         { name: "ACTIONS", uid: "actions" },
     ];
 
@@ -23,7 +22,6 @@ const NFTS = () => {
         switch (columnKey) {
             case "name":
             case "description":
-            case "totalSupply":
                 return (
                     <Text b size={14} css={{ tt: "capitalize" }}>
                         {cellValue}

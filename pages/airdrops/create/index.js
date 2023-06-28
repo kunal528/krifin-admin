@@ -4,6 +4,7 @@ import styles from '../../../styles/Forms.module.css'
 import BrowseFile from '../../../components/BrowseFile'
 import useFirebase from '../../../lib/useFirebase'
 import { IoIosClose } from 'react-icons/io'
+import useWeb3 from '../../../lib/useWeb3'
 
 const NFTCreate = () => {
     const [file, setFile] = React.useState(null)
@@ -17,6 +18,8 @@ const NFTCreate = () => {
 
 
     const { addAirdrop } = useFirebase()
+
+    const { mintAirdrop } = useWeb3();
 
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -38,7 +41,7 @@ const NFTCreate = () => {
     }
 
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         console.log(state)
         const airdrop = {
@@ -47,7 +50,8 @@ const NFTCreate = () => {
             // create a set of state.address, then convert it back to an array
             address: [...new Set([...state.address, ...addresses])],
         }
-        addAirdrop(airdrop, file)
+        var tokenId = await addAirdrop(airdrop, file);
+        await mintAirdrop(tokenId, addresses);
     }
 
     return (

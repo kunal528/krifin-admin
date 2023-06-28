@@ -9,6 +9,7 @@ import { StyledBadge } from '../../components/styles/StyledBadge';
 import Link from 'next/link';
 import useFirebase from '../../lib/useFirebase';
 import SellDialog from '../../components/dialogs/SellDialog';
+import useWeb3 from '../../lib/useWeb3';
 
 const NFTS = () => {
     const columns = [
@@ -20,6 +21,8 @@ const NFTS = () => {
     ];
 
     const [open, setOpen] = useState(false);
+
+    const { removeNFTFromSale } = useWeb3();
 
     const renderCell = (user, columnKey) => {
         const cellValue = user[columnKey];
@@ -62,7 +65,8 @@ const NFTS = () => {
 
     function deleteNFT(id) {
         console.log(id)
-        updateNFT({ id, listing: false }).then(() => {
+        updateNFT({ id, listed: false }).then(async () => {
+            await removeNFTFromSale(id)
             get()
         })
     }

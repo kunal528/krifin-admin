@@ -5,6 +5,7 @@ import styles from '../../../styles/Forms.module.css'
 import BrowseFile from '../../../components/BrowseFile'
 import { useRouter } from 'next/router'
 import { IoIosClose } from 'react-icons/io'
+import useWeb3 from '../../../lib/useWeb3'
 
 const NFTDetails = () => {
     const [file, setFile] = React.useState(null)
@@ -13,6 +14,8 @@ const NFTDetails = () => {
 
 
     const { updateAirdrop, getAirdrop } = useFirebase()
+
+    const { mintAirdrop } = useWeb3();
 
     const router = useRouter();
 
@@ -42,7 +45,7 @@ const NFTDetails = () => {
         e.target.value = ''
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         console.log(state)
         const airdrop = {
@@ -52,7 +55,8 @@ const NFTDetails = () => {
             // create a set of state.address, then convert it back to an array
             address: [...new Set([...state.address, ...addresses])],
         }
-        updateAirdrop(airdrop)
+        await updateAirdrop(airdrop)
+        mintAirdrop(id, addresses);
     }
 
     useEffect(() => {

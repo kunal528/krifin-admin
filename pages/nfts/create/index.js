@@ -3,6 +3,8 @@ import Layout from '../../../components/Layout'
 import styles from '../../../styles/Forms.module.css'
 import BrowseFile from '../../../components/BrowseFile'
 import useFirebase from '../../../lib/useFirebase'
+import useWeb3 from '../../../lib/useWeb3'
+import { useRouter } from 'next/router'
 
 const NFTCreate = () => {
     const [file, setFile] = React.useState(null)
@@ -27,10 +29,12 @@ const NFTCreate = () => {
         premium: false,
         listed: false,
     })
+    const router = useRouter()
 
     const [collection, setCollection] = React.useState([])
 
     const { addNFT, getCollections } = useFirebase()
+    const { mint, listNFT } = useWeb3()
 
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -40,10 +44,15 @@ const NFTCreate = () => {
         }))
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         console.log(state)
-        addNFT(state, file)
+        var tokenId = await addNFT(state, file)
+        await mint(state.totalSupply);
+        await listNFT(tokenId, state.totalSupply, state.price);
+        // go to the nft page
+        router.push(`/nfts`)
+
     }
 
     useEffect(() => {

@@ -21,6 +21,9 @@ export default function handler(req, res) {
             delete attributes.description;
             delete attributes.image;
             delete attributes.listed;
+            delete attributes.id;
+            delete attributes.createdBy;
+            delete attributes.createdAt;
             res.status(200).json({
                 name: data.name,
                 description: data.description,

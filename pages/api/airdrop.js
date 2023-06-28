@@ -4,7 +4,7 @@ var serviceAccount = require("../../lib/serviceAccount.json");
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
-}, "airdrop");
+},);
 
 export default function handler(req, res) {
     const id = req.query.id

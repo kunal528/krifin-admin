@@ -2,12 +2,14 @@ import { Button, Checkbox, Input, Modal, Row, Text } from '@nextui-org/react'
 import React, { useEffect, useState } from 'react'
 import useFirebase from '../../lib/useFirebase';
 import styles from '../../styles/Forms.module.css'
+import useWeb3 from '../../lib/useWeb3';
 
 const SellDialog = ({ open, onClose }) => {
 
     const [nfts, setNfts] = useState([])
 
     const { getNFTsByListing, updateNFT } = useFirebase();
+    const { putNFTOnSale } = useWeb3();
 
     const [selectedNFT, setSelectedNFT] = useState(null)
 
@@ -19,13 +21,18 @@ const SellDialog = ({ open, onClose }) => {
         getNFTsByListing(false).then((nfts) => {
             console.log(nfts)
             setNfts(nfts)
+            if (nfts.length > 0)
+                setSelectedNFT(nfts[0])
         });
+
     }, [])
 
     const handleSubmit = (e) => {
         updateNFT({ ...selectedNFT, listed: true, }).then(() => {
+            putNFTOnSale(selectedNFT.id);
             closeHandler()
         })
+
     }
 
     const handleChange = (e) => {

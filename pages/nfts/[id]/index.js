@@ -85,7 +85,7 @@ const NFTDetails = () => {
                 </select>
             </div>
             <div className={styles.row}>
-                <input type="number" step={0.001} placeholder="Per NFT value" className={styles.input} name='price' onChange={handleChange} disabled={!editMode} value={state.price} />
+                <input type="number" step={0.001} placeholder="Per NFT value" className={styles.input} name='price' onChange={handleChange} disabled value={state.price} />
                 <input type="number" placeholder="Quantity" className={styles.input} name='totalSupply' onChange={handleChange} disabled={!editMode} value={state.totalSupply} />
             </div>
             <div className={styles.row}>

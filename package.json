@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@nextui-org/react": "^1.0.0-beta.13",
+    "@truffle/hdwallet-provider": "^2.1.12",
     "firebase": "^9.22.2",
     "firebase-admin": "^11.9.0",
     "next": "13.4.6",

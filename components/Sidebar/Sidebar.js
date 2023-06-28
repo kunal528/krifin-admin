@@ -16,7 +16,7 @@ const Sidebar = () => {
                 <Link href="/nfts" className={styles.menuItem}>Create</Link>
                 <Link href="/sell" className={styles.menuItem}>Sell Order</Link>
                 <Link href="/airdrops" className={styles.menuItem}>Airdrops</Link>
-                <Link href="" className={styles.menuItem}>Discounts</Link>
+                <Link href="/discounts" className={styles.menuItem}>Discounts</Link>
                 <Link href="/collections" className={styles.menuItem}>Collection</Link>
                 {/* Create a toggle list in revenue */}
                 <div>
