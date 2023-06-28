@@ -36,7 +36,7 @@ const NFTS = () => {
                         <Col css={{ d: "flex" }}>
                             <Tooltip content="Details">
                                 <Link href={{
-                                    pathname: `/airdrops/${user.id}`,
+                                    pathname: `/discounts/${user.id}`,
                                     query: { edit: false }
                                 }}>
                                     <EyeIcon size={20} fill="#979797" />
@@ -46,7 +46,7 @@ const NFTS = () => {
                         <Col css={{ d: "flex" }}>
                             <Tooltip content="Add People">
                                 <Link href={{
-                                    pathname: `/airdrops/${user.id}`,
+                                    pathname: `/discounts/${user.id}`,
                                     query: { edit: true }
                                 }}>
                                     <EditIcon size={20} fill="#979797" />

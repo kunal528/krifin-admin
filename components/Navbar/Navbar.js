@@ -10,7 +10,7 @@ const Navbar = () => {
         <div className={styles.container}>
             <AiOutlineMenu size={30} />
             <div className={styles.actions}>
-                {!false &&
+                {!web3 &&
                     <div className={styles.connectButton}>Connect</div>}
                 <Link href="/profile">
                     <img src={"https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg"} style={{ height: '40px', width: '40px', borderRadius: '75%', objectFit: 'cover', }} alt="your image" /></Link>
