@@ -5,6 +5,7 @@ import BrowseFile from '../../../components/BrowseFile'
 import useFirebase from '../../../lib/useFirebase'
 import useWeb3 from '../../../lib/useWeb3'
 import { useRouter } from 'next/router'
+import { toast } from 'react-toastify'
 
 const NFTCreate = () => {
     const [file, setFile] = React.useState(null)
@@ -47,9 +48,22 @@ const NFTCreate = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         console.log(state)
-        var tokenId = await addNFT(state, file)
-        await mint(state.totalSupply);
-        await listNFT(tokenId, state.totalSupply, state.price);
+        var tokenId = await toast.promise(addNFT(state, file), {
+            pending: 'Creating NFT...',
+            success: 'NFT created successfully',
+            error: 'Error creating NFT'
+        })
+        if (!tokenId) return
+        await toast.promise(mint(state.totalSupply), {
+            pending: 'Minting NFT...',
+            success: 'NFT minted successfully',
+            error: 'Error minting NFT'
+        })
+        await toast.promise(listNFT(tokenId, state.totalSupply, state.price), {
+            pending: 'Listing NFT...',
+            success: 'NFT listed successfully',
+            error: 'Error listing NFT'
+        })
         // go to the nft page
         router.push(`/nfts`)
 

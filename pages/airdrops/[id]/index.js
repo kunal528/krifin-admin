@@ -6,6 +6,7 @@ import BrowseFile from '../../../components/BrowseFile'
 import { useRouter } from 'next/router'
 import { IoIosClose } from 'react-icons/io'
 import useWeb3 from '../../../lib/useWeb3'
+import { toast } from 'react-toastify'
 
 const NFTDetails = () => {
     const [file, setFile] = React.useState(null)
@@ -55,8 +56,18 @@ const NFTDetails = () => {
             // create a set of state.address, then convert it back to an array
             address: [...new Set([...state.address, ...addresses])],
         }
-        await updateAirdrop(airdrop)
-        mintAirdrop(id, addresses);
+        await toast.promise(updateAirdrop(airdrop), {
+            pending: 'Updating Airdrop...',
+            success: 'Airdrop updated successfully',
+            error: 'Error updating Airdrop'
+        })
+        if (addresses.length > 0)
+        toast.promise(mintAirdrop(id, addresses), {
+            pending: 'Minting Airdrop...',
+            success: 'Airdrop minted successfully',
+            error: 'Error minting Airdrop'
+        })
+        router.push('/airdrops')
     }
 
     useEffect(() => {

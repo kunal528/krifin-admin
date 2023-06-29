@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styles from '../../styles/Login.module.css'
 import useFirebase from '../../lib/useFirebase'
+import { toast } from 'react-toastify'
 
 const Login = () => {
     const [email, setEmail] = useState('')
@@ -20,11 +21,11 @@ const Login = () => {
         console.log(result)
         if (result.length > 0 && (result[0].role === 'super admin' || result[0].role === 'admin')) {
             login(email, password).catch((error) => {
-                alert(error.message)
+                toast.error(error.message)
             });
         }
         else {
-            alert('You are not an admin');
+            toast.error('You are not an admin');
         }
     }
     return (

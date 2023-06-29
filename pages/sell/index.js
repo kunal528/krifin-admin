@@ -10,6 +10,7 @@ import Link from 'next/link';
 import useFirebase from '../../lib/useFirebase';
 import SellDialog from '../../components/dialogs/SellDialog';
 import useWeb3 from '../../lib/useWeb3';
+import { toast } from 'react-toastify';
 
 const NFTS = () => {
     const columns = [
@@ -63,12 +64,25 @@ const NFTS = () => {
         setNfts(nfts)
     }
 
-    function deleteNFT(id) {
+    async function deleteNFT(id) {
         console.log(id)
-        updateNFT({ id, listed: false }).then(async () => {
-            await removeNFTFromSale(id)
-            get()
-        })
+        await toast.promise(
+            updateNFT({ id, listed: false }),
+            {
+                pending: 'Removing NFT from sale...',
+                success: 'Removed NFT from sale',
+                error: 'Failed to remove NFT from sale'
+            }
+        )
+        await toast.promise(
+            removeNFTFromSale(id),
+            {
+                pending: 'Removing NFT sale from blockchain...',
+                success: 'Removed NFT sale from blockchain',
+                error: 'Failed to remove NFT sale from blockchain'
+            }
+        )
+        get()
     }
 
     useEffect(() => {

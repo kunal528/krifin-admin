@@ -4,6 +4,7 @@ import useFirebase from '../../../lib/useFirebase'
 import styles from '../../../styles/Forms.module.css'
 import BrowseFile from '../../../components/BrowseFile'
 import { useRouter } from 'next/router'
+import { toast } from 'react-toastify'
 
 const NFTDetails = () => {
     const [file, setFile] = React.useState(null)
@@ -21,6 +22,7 @@ const NFTDetails = () => {
     const [editMode, setEditMode] = React.useState(edit === 'true')
 
 
+
     const handleChange = (e) => {
         const { name, value } = e.target
         setState(prevState => ({
@@ -32,7 +34,12 @@ const NFTDetails = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
         console.log(state)
-        updateNFT(state)
+        toast.promise(updateNFT(state), {
+            pending: 'Updating NFT...',
+            success: 'NFT updated successfully',
+            error: 'Error updating NFT'
+        })
+        router.push('/nfts')
     }
 
     useEffect(() => {

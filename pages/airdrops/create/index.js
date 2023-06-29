@@ -5,6 +5,8 @@ import BrowseFile from '../../../components/BrowseFile'
 import useFirebase from '../../../lib/useFirebase'
 import { IoIosClose } from 'react-icons/io'
 import useWeb3 from '../../../lib/useWeb3'
+import { toast } from 'react-toastify'
+import { useRouter } from 'next/router'
 
 const NFTCreate = () => {
     const [file, setFile] = React.useState(null)
@@ -20,6 +22,8 @@ const NFTCreate = () => {
     const { addAirdrop } = useFirebase()
 
     const { mintAirdrop } = useWeb3();
+
+    const router = useRouter()
 
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -50,8 +54,18 @@ const NFTCreate = () => {
             // create a set of state.address, then convert it back to an array
             address: [...new Set([...state.address, ...addresses])],
         }
-        var tokenId = await addAirdrop(airdrop, file);
-        await mintAirdrop(tokenId, addresses);
+        var tokenId = await toast.promise(addAirdrop(airdrop, file), {
+            pending: 'Creating Airdrop...',
+            success: 'Airdrop created successfully',
+            error: 'Error creating Airdrop'
+        })
+        if (!tokenId) return
+        await toast.promise(mintAirdrop(tokenId, state.address), {
+            pending: 'Minting Airdrop...',
+            success: 'Airdrop minted successfully',
+            error: 'Error minting Airdrop'
+        })
+        router.push(`/airdrops`)
     }
 
     return (

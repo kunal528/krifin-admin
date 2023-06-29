@@ -5,6 +5,8 @@ import BrowseFile from '../../../components/BrowseFile'
 import useFirebase from '../../../lib/useFirebase'
 import { IoIosClose } from 'react-icons/io'
 import useWeb3 from '../../../lib/useWeb3'
+import { toast } from 'react-toastify'
+import { useRouter } from 'next/router'
 
 const NFTCreate = () => {
     const [file, setFile] = React.useState(null)
@@ -22,6 +24,8 @@ const NFTCreate = () => {
     const { addDiscount } = useFirebase()
 
     const { mintDiscount } = useWeb3();
+
+    const router = useRouter()
 
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -52,9 +56,17 @@ const NFTCreate = () => {
             // create a set of state.address, then convert it back to an array
             address: [...new Set([...state.address, ...addresses])],
         }
-        var tokenId = await addDiscount(airdrop, file)
-        console.log(tokenId);
-        await mintDiscount(tokenId, addresses, state.discount)
+        var tokenId = await toast.promise(addDiscount(airdrop, file), {
+            pending: 'Creating Discount...',
+            success: 'Discount created successfully',
+            error: 'Error creating Discount'
+        })
+        await toast.promise(mintDiscount(tokenId, addresses, state.discount), {
+            pending: 'Minting Discount...',
+            success: 'Discount minted successfully',
+            error: 'Error minting Discount'
+        })
+        router.push('/discounts')
     }
 
     return (

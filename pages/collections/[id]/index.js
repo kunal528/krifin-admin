@@ -4,6 +4,7 @@ import useFirebase from '../../../lib/useFirebase'
 import styles from '../../../styles/Forms.module.css'
 import BrowseFile from '../../../components/BrowseFile'
 import { useRouter } from 'next/router'
+import { toast } from 'react-toastify'
 
 const Details = () => {
     const [file, setFile] = React.useState(null)
@@ -27,10 +28,15 @@ const Details = () => {
         }))
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         console.log(state)
-        updateCollection(state)
+        await toast.promise(updateCollection(state), {
+            pending: 'Updating Collection...',
+            success: 'Collection updated successfully',
+            error: 'Error updating Collection'
+        })
+        router.push('/collections')
     }
 
     useEffect(() => {

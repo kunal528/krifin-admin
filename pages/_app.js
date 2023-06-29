@@ -3,6 +3,8 @@ import useFirebase from '../lib/useFirebase';
 import '../styles/globals.css'
 import { useRouter } from 'next/router';
 import { NextUIProvider, createTheme } from '@nextui-org/react'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function MyApp({ Component, pageProps }) {
   const { streamUser } = useFirebase()
@@ -24,13 +26,14 @@ function MyApp({ Component, pageProps }) {
     theme: {
     }
   });
-  
+
 
   const getLayout = Component.getLayout || ((page) => page)
 
   return (
     <NextUIProvider theme={darkTheme}>
       {getLayout(<Component {...pageProps} />)}
+      <ToastContainer theme='darks'/>
     </NextUIProvider>)
 }
 

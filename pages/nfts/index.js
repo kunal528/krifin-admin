@@ -8,6 +8,7 @@ import { DeleteIcon } from '../../components/styles/DeleteIcon';
 import { StyledBadge } from '../../components/styles/StyledBadge';
 import Link from 'next/link';
 import useFirebase from '../../lib/useFirebase';
+import { toast } from 'react-toastify';
 
 const NFTS = () => {
     const columns = [

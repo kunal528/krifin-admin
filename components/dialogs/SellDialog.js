@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import useFirebase from '../../lib/useFirebase';
 import styles from '../../styles/Forms.module.css'
 import useWeb3 from '../../lib/useWeb3';
+import { toast } from 'react-toastify';
 
 const SellDialog = ({ open, onClose }) => {
 
@@ -27,12 +28,20 @@ const SellDialog = ({ open, onClose }) => {
 
     }, [])
 
-    const handleSubmit = (e) => {
-        updateNFT({ ...selectedNFT, listed: true, }).then(() => {
-            putNFTOnSale(selectedNFT.id);
-            closeHandler()
+    const handleSubmit = async (e) => {
+        await toast.promise(updateNFT({ ...selectedNFT, listed: true, }), {
+            pending: 'Putting NFT for sale...',
+            success: 'NFT listed successfully',
+            error: 'Error listing NFT'
         })
 
+        await toast.promise(putNFTOnSale(selectedNFT.id), {
+            pending: 'Putting NFT on sale...',
+            success: 'NFT put on sale successfully',
+            error: 'Error putting NFT on sale'
+        })
+
+        closeHandler()
     }
 
     const handleChange = (e) => {

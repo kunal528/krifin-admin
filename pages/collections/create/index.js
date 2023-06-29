@@ -3,6 +3,7 @@ import Layout from '../../../components/Layout'
 import BrowseFile from '../../../components/BrowseFile'
 import useFirebase from '../../../lib/useFirebase'
 import styles from '../../../styles/Forms.module.css'
+import { toast } from 'react-toastify'
 
 const Create = () => {
     const [file, setFile] = React.useState(null)
@@ -13,6 +14,8 @@ const Create = () => {
 
     const { addCollection } = useFirebase()
 
+    const router = useRouter()
+
     const handleChange = (e) => {
         const { name, value } = e.target
         setState(prevState => ({
@@ -21,10 +24,16 @@ const Create = () => {
         }))
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         console.log(state)
-        addCollection(state, file)
+        await toast.promise(
+            addCollection(state, file), {
+            pending: 'Creating Collection...',
+            success: 'Collection created successfully',
+            error: 'Error creating Collection'
+        })
+        router.push('/collections')
     }
     return (
         <div className={styles.container}>
