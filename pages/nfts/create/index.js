@@ -102,8 +102,8 @@ const NFTCreate = () => {
                 </select>
                 <select className={styles.input} name='assetType' onChange={handleChange}>
                     <option disabled>Asset Type</option>
-                    <option value="utility">Utility</option>
-                    <option value="security">Security</option>
+                    <option value="Utility">Utility</option>
+                    <option value="Security">Security</option>
                 </select>
             </div>
             <div className={styles.row}>
