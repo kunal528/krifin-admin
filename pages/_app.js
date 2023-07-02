@@ -33,7 +33,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <NextUIProvider theme={darkTheme}>
       {getLayout(<Component {...pageProps} />)}
-      <ToastContainer theme='darks'/>
+      <ToastContainer theme='dark'/>
     </NextUIProvider>)
 }
 

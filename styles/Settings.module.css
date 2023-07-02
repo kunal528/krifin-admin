@@ -1,0 +1,41 @@
+.container {
+  padding: 0 2rem;
+}
+.cards {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin: 40px 0;
+}
+
+.card {
+  padding: 20px;
+  border-radius: 10px;
+  background: #2b2a2a;
+  width: 100%;
+  max-width: 320px;
+  gap: 20px;
+  align-items: center;
+  display: flex;
+}
+
+.cardTitle {
+  font-size: 25px;
+  font-weight: 500;
+  line-height: 30px;
+  letter-spacing: 0em;
+  margin-bottom: 10px;
+  text-align: left;
+  color: white;
+}
+
+.cardContent {
+  flex: 1;
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #b2b2b2;
+}

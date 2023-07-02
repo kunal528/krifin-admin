@@ -22,12 +22,12 @@ const Sidebar = () => {
                 <div>
                     <div className={styles.menuItemTitle} onClick={() => { setRevenue(val => !val) }}>Revenue {revenue ? <IoIosArrowUp /> : <IoIosArrowDown />}</div>
                     {revenue && <div className={styles.subMenu}>
-                        <Link href="" className={styles.subMenuItem}>Primary Sales</Link>
-                        <Link href="" className={styles.subMenuItem}>Secondary Sales</Link>
+                        <Link href="/revenue/primary" className={styles.subMenuItem}>Primary Sales</Link>
+                        <Link href="/revenue/secondary" className={styles.subMenuItem}>Secondary Sales</Link>
                     </div>}
                 </div>
                 {/* Create a sub item */}
-                <Link href="" className={styles.menuItem}>Settings</Link>
+                <Link href="/settings" className={styles.menuItem}>Settings</Link>
                 <div className={styles.menuItem} onClick={logout}>Logout</div>
             </div>
 
