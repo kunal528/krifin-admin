@@ -47,6 +47,7 @@ const NFTCreate = () => {
         developer: '',
         majorityShareholder: '',
         management: '',
+        apy: '',
         premium: false,
         listed: false,
     })
@@ -111,6 +112,7 @@ const NFTCreate = () => {
             <div className={styles.row}>
                 <input type="text" placeholder="State" className={styles.input} name='state' onChange={handleChange} />
                 <input type="text" placeholder="Pincode" className={styles.input} name='pincode' onChange={handleChange} />
+                <input type="text" placeholder="APY" className={styles.input} name='apy' onChange={handleChange} />
             </div>
             <div className={styles.row}>
                 <textarea type="text" placeholder="Description" className={styles.textarea} name='description' onChange={handleChange} />

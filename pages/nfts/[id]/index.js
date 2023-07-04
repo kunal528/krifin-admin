@@ -90,6 +90,7 @@ const NFTDetails = () => {
             <div className={styles.row}>
                 <input type="text" placeholder="State" className={styles.input} name='state' onChange={handleChange} disabled={!editMode} value={state.state} />
                 <input type="text" placeholder="Pincode" className={styles.input} name='pincode' onChange={handleChange} disabled={!editMode} value={state.pincode} />
+                <input type="text" placeholder="APY" className={styles.input} name='apy' onChange={handleChange} disabled={!editMode} value={state.apy} />
             </div>
             <div className={styles.row}>
                 <textarea type="text" placeholder="Description" className={styles.textarea} name='description' onChange={handleChange} disabled={!editMode} value={state.description} />
