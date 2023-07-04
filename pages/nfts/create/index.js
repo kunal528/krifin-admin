@@ -9,19 +9,39 @@ import { toast } from 'react-toastify'
 
 const NFTCreate = () => {
     const [file, setFile] = React.useState(null)
+    const categories = [
+        'Retail REITs',
+        'Residential REITs',
+        'Healthcare REITs',
+        'Office REITs',
+        'Mortgage REITs',
+        'Heritage sites',
+        'Cafes',
+        'Restaurants',
+        'Shops',
+        'Amusement parks',
+        'Gardens',
+        'Tourist sites',
+        'Library',
+        'Museums',
+        'Theatre',
+    ]
     const [state, setState] = React.useState({
         name: '',
         city: '',
         country: '',
+        state: '',
+        pincode: '',
         description: '',
         address: '',
         collection: '',
-        assetType: '',
+        assetType: 'Utility',
         price: '',
+        category: categories[0],
         totalSupply: '',
         totalAssetValue: '',
         preTaxYield: '',
-        activeEarning: '',
+        activeEarning: 'Yes',
         stablePeriod: '',
         repaymentSession: '',
         developer: '',
@@ -33,6 +53,7 @@ const NFTCreate = () => {
     const router = useRouter()
 
     const [collection, setCollection] = React.useState([])
+
 
     const { addNFT, getCollections } = useFirebase()
     const { mint, listNFT } = useWeb3()
@@ -88,6 +109,10 @@ const NFTCreate = () => {
                 <input type="text" placeholder="Country" className={styles.input} name='country' onChange={handleChange} />
             </div>
             <div className={styles.row}>
+                <input type="text" placeholder="State" className={styles.input} name='state' onChange={handleChange} />
+                <input type="text" placeholder="Pincode" className={styles.input} name='pincode' onChange={handleChange} />
+            </div>
+            <div className={styles.row}>
                 <textarea type="text" placeholder="Description" className={styles.textarea} name='description' onChange={handleChange} />
             </div>
             <div className={styles.row}>
@@ -98,6 +123,12 @@ const NFTCreate = () => {
                     <option disabled>Collection</option>
                     {collection.map((item, index) => (
                         <option key={index} value={item.id}>{item.name}</option>
+                    ))}
+                </select>
+                <select className={styles.input} name='category' onChange={handleChange}>
+                    <option disabled>Category</option>
+                    {categories.map((item, index) => (
+                        <option key={item} value={item}>{item}</option>
                     ))}
                 </select>
                 <select className={styles.input} name='assetType' onChange={handleChange}>

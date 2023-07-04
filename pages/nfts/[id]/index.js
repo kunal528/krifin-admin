@@ -9,6 +9,23 @@ import { toast } from 'react-toastify'
 const NFTDetails = () => {
     const [file, setFile] = React.useState(null)
     const [state, setState] = React.useState(null)
+    const categories = [
+        'Retail REITs',
+        'Residential REITs',
+        'Healthcare REITs',
+        'Office REITs',
+        'Mortgage REITs',
+        'Heritage sites',
+        'Cafes',
+        'Restaurants',
+        'Shops',
+        'Amusement parks',
+        'Gardens',
+        'Tourist sites',
+        'Library',
+        'Museums',
+        'Theatre',
+    ]
 
     const [collections, setCollections] = React.useState([])
 
@@ -71,6 +88,10 @@ const NFTDetails = () => {
                 <input type="text" placeholder="Country" className={styles.input} name='country' onChange={handleChange} disabled={!editMode} value={state.country} />
             </div>
             <div className={styles.row}>
+                <input type="text" placeholder="State" className={styles.input} name='state' onChange={handleChange} disabled={!editMode} value={state.state} />
+                <input type="text" placeholder="Pincode" className={styles.input} name='pincode' onChange={handleChange} disabled={!editMode} value={state.pincode} />
+            </div>
+            <div className={styles.row}>
                 <textarea type="text" placeholder="Description" className={styles.textarea} name='description' onChange={handleChange} disabled={!editMode} value={state.description} />
             </div>
             <div className={styles.row}>
@@ -84,6 +105,12 @@ const NFTDetails = () => {
                             return <option key={collection.id} value={collection.id}>{collection.name}</option>
                         })
                     }
+                </select>
+                <select className={styles.input} name='category' onChange={handleChange} disabled={!editMode} value={state.category}>
+                    <option disabled>Category</option>
+                    {categories.map((item, index) => (
+                        <option key={item} value={item}>{item}</option>
+                    ))}
                 </select>
                 <select className={styles.input} name='assetType' onChange={handleChange} disabled={!editMode} value={state.assetType}>
                     <option disabled>Asset Type</option>
