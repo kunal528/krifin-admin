@@ -91,7 +91,7 @@ const NFTDetails = () => {
     }
     return (
         <div className={styles.container}>
-            <div className={styles.row} style={{ height: '300px' }}>
+            <div className={styles.row}>
                 {editMode && <BrowseFile setFile={setFile} />}
                 {(state.image || file) ? <img src={file ? URL.createObjectURL(file) : state.image} alt="preview" className={styles.preview} /> :
                     <div className={styles.preview}>Preview of the selected file here.</div>

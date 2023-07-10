@@ -38,7 +38,7 @@ const Create = () => {
     }
     return (
         <div className={styles.container}>
-            <div className={styles.row} style={{ height: '300px' }}>
+            <div className={styles.row}  >
                 <BrowseFile setFile={setFile} />
                 {file ? <img src={URL.createObjectURL(file)} alt="preview" className={styles.preview} /> :
                     <div className={styles.preview}>Preview of the selected file here.</div>
