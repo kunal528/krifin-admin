@@ -34,8 +34,8 @@ const Login = () => {
                 <img src='/logo.png' alt='logo' className={styles.logo} />
                 <input type='text' placeholder='Username' className={styles.input} onChange={(e) => setEmail(e.target.value)} />
                 <input type='password' placeholder='Password' className={styles.input} onChange={(e) => setPassword(e.target.value)} />
-                <div className={styles.button} onClick={async () => {
-                    await toast.promise(handleSubmit(), {
+                <div className={styles.button} onClick={async (e) => {
+                    await toast.promise(handleSubmit(e), {
                         pending: 'Logging in...',
                         success: 'Logged in successfully',
                         error: 'Error logging in'
