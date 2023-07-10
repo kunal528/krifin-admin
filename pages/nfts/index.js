@@ -9,6 +9,7 @@ import { StyledBadge } from '../../components/styles/StyledBadge';
 import Link from 'next/link';
 import useFirebase from '../../lib/useFirebase';
 import { toast } from 'react-toastify';
+import useWeb3 from '../../lib/useWeb3';
 
 const NFTS = () => {
     const columns = [
@@ -46,13 +47,20 @@ const NFTS = () => {
                             </Tooltip>
                         </Col>
                         <Col css={{ d: "flex" }}>
-                            <Tooltip content="Edit user">
+                            <Tooltip content="Edit">
                                 <Link href={{
                                     pathname: `/nfts/${user.id}`,
                                     query: { edit: true }
                                 }}>
                                     <EditIcon size={20} fill="#979797" />
                                 </Link>
+                            </Tooltip>
+                        </Col>
+                        <Col css={{ d: "flex" }}>
+                            <Tooltip content="Delete">
+                                <div onClick={() => handleRemove(user.id)}>
+                                    <DeleteIcon size={20} fill="#FF0080" />
+                                </div>
                             </Tooltip>
                         </Col>
                     </Row>
@@ -62,9 +70,27 @@ const NFTS = () => {
         }
     };
 
+
+    const handleRemove = async (id) => {
+        await toast.promise(delistNFT(id), {
+            pending: 'Deleting...',
+            success: 'Deleted successfully',
+            error: 'Error deleting'
+        })
+
+        await toast.promise(deleteNFT(id), {
+            pending: 'Deleting...',
+            success: 'Deleted successfully',
+            error: 'Error deleting'
+        })
+
+    }
+
     const [nfts, setNfts] = useState([])
 
-    const { getNFTs } = useFirebase();
+    const { getNFTs, deleteNFT } = useFirebase();
+
+    const { mint, listNFT, delistNFT, web3, fnftContract, marketplaceContract, account } = useWeb3();
 
     async function get() {
         const nfts = await getNFTs();
@@ -74,11 +100,23 @@ const NFTS = () => {
     useEffect(() => {
         get()
     }, [])
+
+    // const handleUpdateContract = async () => {
+    //     for (let i = 0; i < nfts.length; i++) {
+    //         const nft = nfts[i];
+    //         const { id, price, totalSupply } = nft;
+    //         if (id !== "1") {
+    //             const minted = await mint(totalSupply);
+    //         }
+    //         const listed = await listNFT(id, totalSupply, price, 1);
+    //     }
+    // }
     return (
         <div style={{ padding: ' 0 2rem' }}>
             <Button style={{ background: '#3d00b7' }} auto>
                 <Link href="/nfts/create">Create NFT</Link>
             </Button>
+            {/* <div onClick={handleUpdateContract}>Test</div> */}
             <Table
                 aria-label="Example table with custom cells"
                 css={{
@@ -95,7 +133,8 @@ const NFTS = () => {
                         <Table.Column
                             key={column.uid}
                             hideHeader={column.uid === "actions"}
-                            align={column.uid === "actions" ? "center" : "start"}
+                            align={column.uid === "actions" ? "right" : "start"}
+                            width={column.uid === "actions" ? "100px" : undefined}
                         >
                             {column.name}
                         </Table.Column>

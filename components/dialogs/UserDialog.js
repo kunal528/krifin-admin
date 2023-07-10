@@ -9,7 +9,7 @@ const UserDialog = ({ visible, closeHandler, user }) => {
         name: '',
         email: '',
         password: '',
-        role: 'super admin'
+        role: 'admin'
     })
 
     const { signin, addUser, updateUser } = useAccess()
@@ -69,7 +69,7 @@ const UserDialog = ({ visible, closeHandler, user }) => {
                 <input type="text" placeholder="Email" className={styles.input} name='email' onChange={handleChange} disabled={user} value={state.email}/>
                 {!user && <input type="password" placeholder="Password" className={styles.input} name='password' onChange={handleChange} />}
                 <select onChange={handleChange} name="role" className={styles.input} value={state.role}>
-                    <option value="super admin">Super Admin</option>
+                    {/* <option value="super admin">Super Admin</option> */}
                     <option value="admin">Admin</option>
                 </select>
             </Modal.Body>

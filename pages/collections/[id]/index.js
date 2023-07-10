@@ -11,7 +11,7 @@ const Details = () => {
     const [state, setState] = React.useState(null)
 
 
-    const { updateCollection, getCollection } = useFirebase()
+    const { updateCollection, getCollection, updateFile } = useFirebase()
 
     const router = useRouter();
 
@@ -30,6 +30,13 @@ const Details = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        if (file) {
+            await toast.promise(updateFile(file, state.image), {
+                pending: 'Updating file...',
+                success: 'File updated successfully',
+                error: 'Error updating file'
+            })
+        }
         console.log(state)
         await toast.promise(updateCollection(state), {
             pending: 'Updating Collection...',

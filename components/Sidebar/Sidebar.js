@@ -1,15 +1,27 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styles from '../../styles/Sidebar.module.css'
 import Link from 'next/link'
 import { IoIosArrowDown, IoIosArrowUp, } from 'react-icons/io'
 import { RxCross2 } from 'react-icons/rx'
 import useFirebase from '../../lib/useFirebase'
 
-const Sidebar = () => {
+const Sidebar = ({ open, setOpen }) => {
     const [revenue, setRevenue] = React.useState(false)
-    const { logout } = useFirebase()
+
+    const { logout, streamUser, getUserProfile } = useFirebase()
+    const [user, setUser] = React.useState(null)
+
+    useEffect(() => {
+        streamUser((user) => {
+            if (user) {
+                getUserProfile(user.uid).then((res) => {
+                    setUser(res)
+                })
+            }
+        })
+    }, [])
     return (
-        <div className={styles.container}>
+        <div className={styles.container} style={{ left: open ? '-300px' : '0px' }}>
             <img src="/logo.png" alt="logo" className={styles.logo} />
             <div className={styles.menu}>
                 <Link href="/" className={styles.menuItem}>Dashboard</Link>
@@ -27,11 +39,12 @@ const Sidebar = () => {
                     </div>}
                 </div>
                 {/* Create a sub item */}
-                <Link href="/settings" className={styles.menuItem}>Settings</Link>
+                {user && user.role === "super admin" && <Link href="/settings" className={styles.menuItem}>Settings</Link>}
                 <div className={styles.menuItem} onClick={logout}>Logout</div>
+                {open && <div className={styles.close} onClick={setOpen} >
+                    <RxCross2 size={30} />
+                </div>}
             </div>
-
-
         </div>
     )
 }

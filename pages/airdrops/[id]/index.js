@@ -14,7 +14,7 @@ const NFTDetails = () => {
 
 
 
-    const { updateAirdrop, getAirdrop } = useFirebase()
+    const { updateAirdrop, getAirdrop, updateFile } = useFirebase()
 
     const { mintAirdrop } = useWeb3();
 
@@ -49,6 +49,13 @@ const NFTDetails = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         console.log(state)
+        if (file) {
+            await toast.promise(updateFile(file, state.image), {
+                pending: 'Updating file...',
+                success: 'File updated successfully',
+                error: 'Error updating file'
+            })
+        }
         const airdrop = {
             id: state.id,
             name: state.name,

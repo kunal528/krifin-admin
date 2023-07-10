@@ -37,6 +37,7 @@ const NFTCreate = () => {
         collection: '',
         assetType: 'Utility',
         price: '',
+        payoutGroup: '1',
         category: categories[0],
         totalSupply: '',
         totalAssetValue: '',
@@ -54,9 +55,10 @@ const NFTCreate = () => {
     const router = useRouter()
 
     const [collection, setCollection] = React.useState([])
+    const [payoutGroups, setPayoutGroups] = React.useState([])
 
 
-    const { addNFT, getCollections } = useFirebase()
+    const { addNFT, getCollections, getPayoutGroups } = useFirebase()
     const { mint, listNFT } = useWeb3()
 
     const handleChange = (e) => {
@@ -81,7 +83,7 @@ const NFTCreate = () => {
             success: 'NFT minted successfully',
             error: 'Error minting NFT'
         })
-        await toast.promise(listNFT(tokenId, state.totalSupply, state.price), {
+        await toast.promise(listNFT(tokenId, state.totalSupply, state.price, state.payoutGroup), {
             pending: 'Listing NFT...',
             success: 'NFT listed successfully',
             error: 'Error listing NFT'
@@ -94,6 +96,9 @@ const NFTCreate = () => {
     useEffect(() => {
         getCollections().then(collections => {
             setCollection(collections)
+        })
+        getPayoutGroups().then(payoutGroups => {
+            setPayoutGroups(payoutGroups)
         })
     }, [])
     return (
@@ -142,6 +147,12 @@ const NFTCreate = () => {
             <div className={styles.row}>
                 <input type="number" step={0.001} placeholder="Per NFT value" className={styles.input} name='price' onChange={handleChange} />
                 <input type="number" placeholder="Quantity" className={styles.input} name='totalSupply' onChange={handleChange} />
+                <select className={styles.input} name='payoutGroup' onChange={handleChange}>
+                    <option disabled>Category</option>
+                    {payoutGroups.map((item, index) => (
+                        <option key={item.id} value={item.id}>{item.name}</option>
+                    ))}
+                </select>
             </div>
             <div className={styles.row}>
                 <input type="text" placeholder="Total Asset value" className={styles.input} name='totalAssetValue' onChange={handleChange} />

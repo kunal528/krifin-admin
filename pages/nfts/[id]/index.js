@@ -5,6 +5,7 @@ import styles from '../../../styles/Forms.module.css'
 import BrowseFile from '../../../components/BrowseFile'
 import { useRouter } from 'next/router'
 import { toast } from 'react-toastify'
+import useWeb3 from '../../../lib/useWeb3'
 
 const NFTDetails = () => {
     const [file, setFile] = React.useState(null)
@@ -29,9 +30,12 @@ const NFTDetails = () => {
 
     const [collections, setCollections] = React.useState([])
 
+    const [payoutGroups, setPayoutGroups] = React.useState([])
 
-    const { updateNFT, getNFT, getCollections } = useFirebase()
 
+    const { updateNFT, getNFT, getCollections, getPayoutGroups, updateFile  } = useFirebase()
+
+    const { updateNFT: changeNFT } = useWeb3()
     const router = useRouter();
 
     const { id, edit } = router.query;
@@ -48,10 +52,22 @@ const NFTDetails = () => {
         }))
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         console.log(state)
-        toast.promise(updateNFT(state), {
+        if (file) {
+            await toast.promise(updateFile(file, state.image), {
+                pending: 'Updating file...',
+                success: 'File updated successfully',
+                error: 'Error updating file'
+            })
+        }
+        await toast.promise(changeNFT(state.id, state.price, state.payoutGroup), {
+            pending: 'Updating NFT...',
+            success: 'NFT updated successfully',
+            error: 'Error updating NFT'
+        })
+        await toast.promise(updateNFT(state), {
             pending: 'Updating NFT...',
             success: 'NFT updated successfully',
             error: 'Error updating NFT'
@@ -68,6 +84,9 @@ const NFTDetails = () => {
         }
         getCollections().then((collections) => {
             setCollections(collections)
+        })
+        getPayoutGroups().then((payoutGroups) => {
+            setPayoutGroups(payoutGroups)
         })
     }, [id])
 
@@ -122,6 +141,12 @@ const NFTDetails = () => {
             <div className={styles.row}>
                 <input type="number" step={0.001} placeholder="Per NFT value" className={styles.input} name='price' onChange={handleChange} disabled value={state.price} />
                 <input type="number" placeholder="Quantity" className={styles.input} name='totalSupply' onChange={handleChange} disabled={!editMode} value={state.totalSupply} />
+                <select className={styles.input} name='payoutGroup' onChange={handleChange} disabled={!editMode} value={state.payoutGroup}>
+                    <option disabled>Category</option>
+                    {payoutGroups.map((item, index) => (
+                        <option key={item.id} value={item.id}>{item.name}</option>
+                    ))}
+                </select>
             </div>
             <div className={styles.row}>
                 <input type="text" placeholder="Total Asset value" className={styles.input} name='totalAssetValue' onChange={handleChange} disabled={!editMode} value={state.totalAssetValue} />
