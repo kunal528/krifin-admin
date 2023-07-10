@@ -5,7 +5,7 @@ import { IoIosArrowDown, IoIosArrowUp, } from 'react-icons/io'
 import { RxCross2 } from 'react-icons/rx'
 import useFirebase from '../../lib/useFirebase'
 
-const Sidebar = ({ open, setOpen }) => {
+const Sidebar = ({ open,visible, setOpen }) => {
     const [revenue, setRevenue] = React.useState(false)
 
     const { logout, streamUser, getUserProfile } = useFirebase()
@@ -41,7 +41,7 @@ const Sidebar = ({ open, setOpen }) => {
                 {/* Create a sub item */}
                 {user && user.role === "super admin" && <Link href="/settings" className={styles.menuItem}>Settings</Link>}
                 <div className={styles.menuItem} onClick={logout}>Logout</div>
-                {open && <div className={styles.close} onClick={setOpen} >
+                {visible && <div className={styles.close} onClick={setOpen} >
                     <RxCross2 size={30} />
                 </div>}
             </div>

@@ -6,7 +6,7 @@
   height: 100%;
   background: #151515;
   transition: all 0.5s ease;
-  z-index: 100;
+  z-index: 999;
   padding: 20px;
   overflow: auto;
 }

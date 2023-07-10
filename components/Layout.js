@@ -6,19 +6,24 @@ import styles from '../styles/Layout.module.css'
 
 const Layout = ({ children }) => {
     const [visible, setVisible] = React.useState(true)
+    const [layout, setLayout] = React.useState(false)
     useEffect(() => {
         if (window.innerWidth > 768) {
             setVisible(false)
+            setLayout(false)
         }
         else {
             setVisible(true)
+            setLayout(true)
         }
         window.addEventListener('resize', (e) => {
             if (window.innerWidth > 768) {
                 setVisible(false)
+                setLayout(false)
             }
             else {
                 setVisible(true)
+                setLayout(true)
             }
         }
         )
@@ -35,10 +40,10 @@ const Layout = ({ children }) => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Navbar setOpen={setVisible} />
-            <Sidebar open={visible} setOpen={() => {
+            <Sidebar open={visible} visible={layout} setOpen={() => {
                 setVisible(val => !val)
             }} />
-            <div className={styles.app} style={{ marginLeft: visible ? '0px' : '300px' }}>
+            <div className={styles.app} style={{ marginLeft: layout ? '0px' : '300px' }}>
                 {children}
             </div>
         </div>
