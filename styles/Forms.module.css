@@ -13,7 +13,6 @@
 .preview {
   max-width: 600px;
   width: 100%;
-  flex: 1;
   border-radius: 20px;
   display: flex;
   justify-content: center;
