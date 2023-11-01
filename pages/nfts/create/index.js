@@ -12,7 +12,7 @@ const NFTCreate = () => {
     const categories = [
         "Farms",
         "Farm Estates",
-        "Coffee Estate",
+        "Coffee Estates",
         "Orchards",
         "Vineyards",
         "Fiber farms",
